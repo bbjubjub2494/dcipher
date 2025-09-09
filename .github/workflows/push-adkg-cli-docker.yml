@@ -61,4 +61,8 @@ jobs:
 
       - name : extract adkg-cli binary
         shell: bash
-        run  : docker image save ghcr.io/bbjubjub2494/dcipher/adkg-cli:${{ env.SHORT_SHA }} | tar xO ./adkg-cli > ./adkg-cli && chmod +x ./adkg-cli
+        run  : |
+          docker pull ghcr.io/bbjubjub2494/dcipher/adkg-cli:${{ env.SHORT_SHA }}
+          container=$(docker create ghcr.io/bbjubjub2494/dcipher/adkg-cli:${{ env.SHORT_SHA }})
+          docker cp $container:usr/local/bin/adkg-cli ./adkg-cli
+          docker rm $container
