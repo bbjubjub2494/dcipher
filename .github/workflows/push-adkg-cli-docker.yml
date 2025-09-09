@@ -28,25 +28,6 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.DOCKER_REGISTRY }}/adkg-cli
-          labels: |
-            maintainer=${{ env.IMAGE_MAINTAINER }}
-            org.opencontainers.image.title=adkg-cli
-            org.opencontainers.image.description="a tool to preform asynchronous distributed key generation"
-            org.opencontainers.image.vendor=${{ env.IMAGE_VENDOR }}
-          flavor: |
-            latest=false
-            prefix=
-            suffix=
-          tags: |
-            type=sha,prefix=
-            type=ref,event=branch,suffix=-latest,enable=${{ startsWith(github.ref, 'refs/heads/') }}
-            type=semver,pattern={{version}},event=tag,enable=${{ startsWith(github.ref, 'refs/tags/') }}
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
         with:
