@@ -82,8 +82,8 @@ jobs:
           push: ${{ github.ref == 'refs/heads/main' }}
           tags: |
                 ${{ steps.meta.outputs.tags }}
-                ghcr.io/randa-mu/dcipher/adkg-cli:master-latest
-                ghcr.io/randa-mu/dcipher/adkg-cli:${{ env.SHORT_SHA }}
+                ghcr.io/bbjubjub2494/dcipher/adkg-cli:main-latest
+                ghcr.io/bbjubjub2494/dcipher/adkg-cli:${{ env.SHORT_SHA }}
           labels: ${{ steps.meta.outputs.labels }}
           context: .
           file: ./crates/adkg-cli/Dockerfile
@@ -91,3 +91,7 @@ jobs:
             type=registry,ref=${{ env.DOCKER_REGISTRY }}/adkg-cli-cache:${{ steps.meta.outputs.version }}
             type=registry,ref=${{ env.DOCKER_REGISTRY }}/adkg-cli-cache:main-latest
           cache-to: type=registry,ref=${{ env.DOCKER_REGISTRY }}/adkg-cli-cache:${{ steps.meta.outputs.version }},mode=max
+
+      - name : extract adkg-cli binary
+        shell: bash
+        run  : docker image save ghcr.io/bbjubjub2494/dcipher/adkg-cli:${{ env.SHORT_SHA }} | tar xO ./adkg-cli > ./adkg-cli && chmod +x ./adkg-cli
