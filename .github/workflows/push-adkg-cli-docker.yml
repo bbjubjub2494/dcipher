@@ -66,3 +66,9 @@ jobs:
           container=$(docker create ghcr.io/bbjubjub2494/dcipher/adkg-cli:${{ env.SHORT_SHA }})
           docker cp $container:usr/local/bin/adkg-cli ./adkg-cli
           docker rm $container
+
+      - name: Upload adkg-cli binary as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: adkg-cli-binary
+          path: ./adkg-cli
