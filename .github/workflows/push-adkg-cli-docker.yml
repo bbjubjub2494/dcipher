@@ -68,7 +68,7 @@ jobs:
           docker rm $container
 
       - name: Upload adkg-cli binary as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: adkg-cli-binary
           path: ./adkg-cli
